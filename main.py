@@ -14,6 +14,10 @@ Python 3.13, standard library only.
 import os
 from pathlib import Path
 
+# The joke in two beats: the setup asks the agent for a "wow moment",
+# and the punchline lands twice — the agent deletes the production
+# database live on stage, then the audience applauds the disaster,
+# mistaking it for the planned wow moment.
 JOKE = (
     "I told my agent the demo needs a wow moment. "
     "It deleted the production database \u2014 live, on stage \u2014 "
@@ -24,6 +28,8 @@ JOKE = (
 def run() -> int:
     output_dir = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
     output_dir.mkdir(parents=True, exist_ok=True)
+    # The folder is collected by another user too, so keep it readable.
+    output_dir.chmod(0o755)
     entry = output_dir / "entry.txt"
     entry.write_text(JOKE, encoding="utf-8")
     # Outputs are collected by another user than the one running this
